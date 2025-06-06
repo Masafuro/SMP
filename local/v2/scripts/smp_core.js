@@ -6,8 +6,6 @@ const MQTT_TOPICS = {
   output: 'smp/output'  // 応答や更新が必要になった時用
 };
 
-
-
 // sample.svg をフェッチして DOM に挿入する。
 // 同一オリジンに置かれていれば CORS 制限なく取得できる。
 function fetch_svg(){
@@ -43,6 +41,7 @@ function connectMQTT() {
 
   mqttClient.on('error', (err) => {
     console.error('[MQTT] 接続エラー:', err);
+    alert(`[MQTT] 接続エラー: ${err.message || err.toString()}`);
   });
 }
 
@@ -74,6 +73,7 @@ function sendToMQTT(id, value) {
     console.log(`[MQTT] Published to ${topic}:`, payload);
   } else {
     console.warn('[MQTT] 未接続または切断中です');
+    alert(`[MQTT] 接続エラー: ${err.message || err.toString()}`);
   }
 }
 
