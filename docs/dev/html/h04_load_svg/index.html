@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Inline‑able SVG Sample</title>
+  <style>
+    /* ビューポート全体をスクロール領域にする */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    /* 1階層目：スクロール領域 + 上揃えの Flex */
+    .viewport {
+      height: 100%;
+      overflow: auto;            /* サイズ超過時に縦横スクロール */
+      display: flex;
+      align-items: flex-start;    /* 縦方向（交差軸）は上揃え */
+    }
+
+    /* 2階層目：svg を動的に挿入するホスト要素。
+       margin:auto で横中央寄せ、flex-shrink で縮小抑止。*/
+    .svg-host {
+      margin-left: auto;
+      margin-right: auto;
+      flex-shrink: 0;            /* 縮小させない */
+      display: block;            /* ブロック化して余白を制御 */
+    }
+  </style>
+</head>
+<body>
+  <div class="viewport">
+    <!-- ここに JavaScript で sample.svg をインライン展開する -->
+    <div id="svg-container" class="svg-host"></div>
+  </div>
+
+  <script>
+    // sample.svg をフェッチして DOM に挿入する。
+    // 同一オリジンに置かれていれば CORS 制限なく取得できる。
+    fetch('sample.svg')
+      .then(response => {
+        if (!response.ok) throw new Error('SVG の読み込みに失敗しました');
+        return response.text();
+      })
+      .then(svgText => {
+        const container = document.getElementById('svg-container');
+        container.innerHTML = svgText;
+        // ここで container.firstElementChild は挿入された <svg> 要素。
+        // 以降、自由に DOM API で操作できる。
+        // 例:   container.querySelector('#rect1').setAttribute('fill', 'red');
+      })
+      .catch(err => console.error(err));
+  </script>
+</body>
+</html>
