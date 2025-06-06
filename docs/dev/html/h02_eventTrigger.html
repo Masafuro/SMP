@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>inputとchangeイベントの比較</title>
+</head>
+<body>
+  <h2>Text Input（テキストボックス）</h2>
+  <input type="text" id="textInput" placeholder="名前を入力してください">
+  
+  <h2>Slider Input（スライダー）</h2>
+  <input type="range" id="rangeInput" min="0" max="100" value="50">
+
+  <script>
+    const textInput = document.getElementById('textInput');
+    const rangeInput = document.getElementById('rangeInput');
+
+    // テキストボックス：inputイベント
+    textInput.addEventListener('input', (e) => {
+      console.log('[TEXT] inputイベント:', e.target.value);
+    });
+
+    // テキストボックス：changeイベント
+    textInput.addEventListener('change', (e) => {
+      console.log('[TEXT] changeイベント:', e.target.value);
+    });
+
+    // スライダー：inputイベント
+    rangeInput.addEventListener('input', (e) => {
+      console.log('[SLIDER] inputイベント:', e.target.value);
+    });
+
+    // スライダー：changeイベント
+    rangeInput.addEventListener('change', (e) => {
+      console.log('[SLIDER] changeイベント:', e.target.value);
+    });
+  </script>
+</body>
+</html>
