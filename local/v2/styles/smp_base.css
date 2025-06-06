@@ -1,0 +1,46 @@
+body {
+  font-family: sans-serif;
+  margin: 30px;
+  background-color: #f9f9f9;
+}
+
+/* ビューポート全体をスクロール領域にする */
+html,body {
+  height: 100%;
+  margin: 0;
+}
+
+/* 1階層目：スクロール領域 + 上揃えの Flex */
+.viewport {
+  height: 100%;
+  overflow: auto;            /* サイズ超過時に縦横スクロール */
+  display: flex;
+  align-items: flex-start;    /* 縦方向（交差軸）は上揃え */
+}
+
+/* 2階層目：svg を動的に挿入するホスト要素。
+    margin:auto で横中央寄せ、flex-shrink で縮小抑止。*/
+.svg-host {
+  margin-left: auto;
+  margin-right: auto;
+  flex-shrink: 0;            /* 縮小させない */
+  display: block;            /* ブロック化して余白を制御 */
+}
+
+
+.gui-item {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="range"],
+button {
+  padding: 6px;
+  font-size: 14px;
+}
