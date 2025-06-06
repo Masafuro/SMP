@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>MQTT over WebSocket Test</title>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+</head>
+<body>
+    <h2>MQTT WebSocketテスト</h2>
+    <div>
+        <input type="text" id="messageInput" placeholder="メッセージを入力">
+        <button onclick="sendMessage()">送信</button>
+    </div>
+    <div>
+        <h3>受信メッセージ</h3>
+        <pre id="log"></pre>
+    </div>
+
+    <script>
+        const client = mqtt.connect("ws://localhost:9001");
+
+        client.on("connect", () => {
+            log("接続成功");
+            client.subscribe("test/topic");
+        });
+
+        client.on("message", (topic, message) => {
+            log(`[受信] ${topic} → ${message.toString()}`);
+        });
+
+        function sendMessage() {
+            const msg = document.getElementById("messageInput").value;
+            client.publish("test/topic", msg);
+            document.getElementById("messageInput").value = "";
+        }
+
+        function log(text) {
+            const logArea = document.getElementById("log");
+            logArea.textContent += text + "\n";
+        }
+    </script>
+</body>
+</html>
