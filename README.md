@@ -1,2 +1,5 @@
 # SMP
-SMP = SVG + mqtt + Python. SMPではInkscapeなどで作成したSVGをGUI画面にしつつ、そのGUI要素の動作管理のすべてをPythonで処理するという野心的なフレームワークです。SVGを組み込んだhtmlとPythonとの間をmqttでバイパスし、生産性高くかつ圧倒的な表現力を持つGUIアプリケーションの構築を可能にすることを目指しています。
+
+> SMP = SVG + mqtt + Python.
+
+SMPではInkscapeなどで作成したSVGをGUI画面にしつつ、そのGUI要素の動作管理のすべてをPythonで処理するという野心的なフレームワークです。SVGを組み込んだhtmlとPythonとの間をmqttでバイパスし、生産性高くかつ圧倒的な表現力を持つGUIアプリケーションの構築を可能にすることを目指しています。
