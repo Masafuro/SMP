@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>SMP GUI with HTML Elements</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 30px;
+    }
+    .gui-item {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>SMP GUIサンプル（HTML形式）</h2>
+  <p>すべての要素はHTMLで定義され、`type`と`event`属性を使って振る舞いを明示しています。発火はコンソールに出力されます。</p>
+
+  <div class="gui-item">
+    <label for="submit_btn">送信ボタン</label>
+    <button id="submit_btn" type="button" event="click">送信</button>
+  </div>
+
+  <div class="gui-item">
+    <label for="name_input">change入力</label>
+    <input id="name_input" type="text" placeholder="名前を入力" event="change" />
+  </div>
+
+  <div class="gui-item">
+    <label for="name_input">input入力</label>
+    <input id="name_input" type="text" placeholder="名前を入力" event="input" />
+  </div>
+
+
+  <div class="gui-item">
+    <label for="volume_slider">inputスライダー</label>
+    <input id="volume_slider" type="range" min="0" max="100" value="50" event="input" />
+  </div>
+  <div class="gui-item">
+    <label for="volume_slider">changeスライダー</label>
+    <input id="volume_slider" type="range" min="0" max="100" value="50" event="change" />
+  </div>
+
+  <script>
+    // 動作を確認。それぞれのevent要素が変化しても、それに合わせてconsole.logが出力されることが確認できた。
+    window.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[event]').forEach(el => {
+        const ev = el.getAttribute('event');
+        if (ev) {
+          el.addEventListener(ev, e => {
+            const value = e.target.value ?? '(no value)';
+            console.log(`Triggered '${ev}' on #${el.id}:`, value);
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

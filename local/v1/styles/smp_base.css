@@ -1,0 +1,22 @@
+body {
+  font-family: sans-serif;
+  margin: 30px;
+  background-color: #f9f9f9;
+}
+
+.gui-item {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="range"],
+button {
+  padding: 6px;
+  font-size: 14px;
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>SMP GUI with HTML Elements</title>
+  <link rel="stylesheet" href="styles/smp_base.css">
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+
+</head>
+<body>
+  <h2>SMP GUIサンプル（HTML形式）</h2>
+  <p>各要素はtypeとevent属性で定義され、scripts.jsにより動作がバインドされます。</p>
+
+  <div class="gui-item">
+    <label for="submit_btn">送信ボタン</label>
+    <button id="submit_btn" type="button" event="click">送信</button>
+  </div>
+
+  <div class="gui-item">
+    <label for="name_input">名前入力</label>
+    <input id="name_input" type="text" placeholder="名前を入力" event="input" />
+  </div>
+
+  <div class="gui-item">
+    <label for="volume_slider">音量スライダー</label>
+    <input id="volume_slider" type="range" min="0" max="100" value="50" event="input" />
+  </div>
+
+  <script src="scripts/smp_core.js"></script>
+  </body>
+</html>
