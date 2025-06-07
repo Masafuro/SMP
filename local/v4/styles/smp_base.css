@@ -26,10 +26,16 @@ input.overlay-element {
   width: calc(100% - 10px);
 }
 
-button.overlay-element {
+.overlay-element {
   background-color: var(--button-color, #ffffff);
 }
 
-button.overlay-element:active {
+.overlay-element:active {
   background-color: #cbcbcb;
+}
+
+.overlay-element {
+  border-style: solid;
+  border-color: var(--border-color, #000);
+  border-width: var(--border-width, 0px);
 }

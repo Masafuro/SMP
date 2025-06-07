@@ -1,5 +1,5 @@
 let mqttClient = null;
-let SVG_path = 'SVG/sample.svg'
+let SVG_path = 'SVG/sample2.svg'
 // === MQTTトピック設定 ===
 const MQTT_TOPICS = {
   input: 'smp/input',
@@ -127,15 +127,21 @@ function createHTMLElementFromSVG(el, svg, containerRect) {
     htmlElement.style.setProperty('--button-color', rgbaColor);
   }
 
-  const strokeColor = styleObj["stroke"];
+
+  const stroke = styleObj["stroke"];
+  const strokeOpacity = styleObj["stroke-opacity"] ?? "1";
   const pixelWidth = convertStrokeWidthToPixels(styleObj["stroke-width"], svg);
-  if (strokeColor && strokeColor !== "none") {
-    htmlElement.style.border = `${pixelWidth}px solid ${strokeColor}`;
+
+  // 色が #RRGGBB 形式であれば rgba に変換してセット
+  if (stroke && stroke !== "none" && /^#([0-9a-fA-F]{6})$/.test(stroke)) {
+    const rgbaStroke = hexToRgba(stroke, strokeOpacity);
+    htmlElement.style.setProperty('--border-color', rgbaStroke);
   }
+  // 太さをセット（単位は px と仮定）
 
-
-
-
+  if (stroke && stroke !== "none") {
+    htmlElement.style.setProperty('--border-width', `${pixelWidth}px`);
+  }
 
   // 指定したもの以外の属性をそのまま継承する
   const excludeAttrs = ['x', 'y', 'width', 'height', 'style', 'innerText'];
