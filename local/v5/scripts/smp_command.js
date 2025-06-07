@@ -1,18 +1,28 @@
-function getTextById(id) {
+export function getTextById(id) {
   const element = document.getElementById(id);
   if (!element) {
-    console.warn(`ID "${id}" を持つ要素が見つかりませんでした。`);
-    return null;
+    console.log(`ID "${id}" を持つ要素が見つかりませんでした。`);
+    return "NO_ID";
   }
-  return element.innerText;
+  return element.textContent;
 }
 
-function setTextById(id, text) {
+export function setTextById(id, text) {
   const element = document.getElementById(id);
   if (!element) {
-    console.warn(`要素が見つかりません: id="${id}"`);
-    return false;
+    console.log(`要素が見つかりません: id="${id}"`);
+    return "NO_ID";
   }
-  element.innerText = text;
+  element.textContent = text;
   return true;
+}
+
+export function parseJSON(jsonString) {
+  try {
+    const parsed = JSON.parse(jsonString);
+    return parsed;
+  } catch (error) {
+    console.error("JSONのパースに失敗しました:", error.message);
+    return null;
+  }
 }

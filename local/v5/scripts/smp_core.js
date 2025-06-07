@@ -1,3 +1,5 @@
+import { getTextById, setTextById, parseJSON } from './smp_command.js';
+
 let mqttClient = null;
 let SVG_path = 'SVG/sample2.svg'
 // === MQTTトピック設定 ===
@@ -7,9 +9,8 @@ const MQTT_TOPICS = {
   response: 'smp/response'
 };
 
-function subscribeMQTT() {
+function subscribeMQTT(subscribe_topic) {
   const client = mqtt.connect('ws://localhost:9001');
-  subscribe_topic = MQTT_TOPICS.request
   client.on('connect', () => {
     console.log('Connected to MQTT broker');
 
@@ -24,7 +25,23 @@ function subscribeMQTT() {
 
   client.on('message', (topic, message) => {
     console.log(`Received message on ${topic}: ${message.toString()}`);
+    
+
     // メッセージ処理ロジックを書く
+    const data = parseJSON(message.toString());
+    let result = "";
+
+    if (data.command == "get"){
+      result = getTextById(data.id);
+    }
+    else if(data.command == "set"){
+      result = setTextById(data.id, data.value);
+    }else{
+      result = `No_COMMAND:${data.command}`;
+    }
+
+    sendToMQTT(data.id, result, MQTT_TOPICS.response);
+
   });
 
   // 必要ならグローバルに保持
@@ -257,7 +274,8 @@ function initSMP() {
   connectMQTT();
   fetch_svg();
   bindAllEvents();
-  subscribeMQTT();
+  subscribeMQTT(MQTT_TOPICS.request);
+
 }
 
 window.addEventListener('DOMContentLoaded', initSMP);
