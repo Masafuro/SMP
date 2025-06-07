@@ -1,0 +1,41 @@
+body{
+  /* debug用背景色  */
+  background:#9a9a9a;
+  
+  margin:0;
+  padding:0;
+}
+
+/* SVG を幅方向で中央寄せ。幅は自然サイズのまま */
+svg{
+  display:block;          /* インライン → ブロックへ */
+  margin-left:auto;
+  margin-right:auto;
+}
+
+
+.overlay-element{
+  border: 0;
+  padding: 0;
+}
+
+input.overlay-element {
+  /* キャレット表示位置の調整 */
+  box-sizing: border-box;
+  padding-left: 10px;
+  width: calc(100% - 10px);
+}
+
+.overlay-element {
+  background-color: var(--button-color, #ffffff);
+}
+
+.overlay-element:active {
+  background-color: #cbcbcb;
+}
+
+.overlay-element {
+  border-style: solid;
+  border-color: var(--border-color, #000);
+  border-width: var(--border-width, 0px);
+}

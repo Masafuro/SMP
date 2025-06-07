@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="sample.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.70110129"
+     inkscape:cx="325.20265"
+     inkscape:cy="372.98462"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showgrid="false" />
+  <defs
+     id="defs1">
+    <rect
+       x="219.65442"
+       y="98.416592"
+       width="422.19292"
+       height="62.758406"
+       id="rect1" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,-4.5285896,-12.831004)"
+       id="text1"
+       style="font-weight:bold;font-size:37.3333px;font-family:'Noto Sans JP';-inkscape-font-specification:'Noto Sans JP Bold';white-space:pre;shape-inside:url(#rect1);fill:#000000;fill-opacity:1;stroke-width:7.55906"><tspan
+         x="219.6543"
+         y="135.93598"
+         id="tspan1">It's a TEST SVG for V4</tspan></text>
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.5875;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2"
+       width="71.846588"
+       height="11.842776"
+       x="52.006821"
+       y="32.477982"
+       s_event="change"
+       placeholder="piyopiyo"
+       s_type="input" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.5875;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2-3"
+       width="106.11311"
+       height="11.767492"
+       x="51.961216"
+       y="48.517475"
+       s_event="input"
+       s_type="input" />
+    <rect
+       style="fill:#48e537;fill-opacity:1;stroke:#000000;stroke-width:1.5875;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2-4"
+       width="31.209486"
+       height="11.962981"
+       x="126.93605"
+       y="32.417881"
+       innerText = "送信"
+       s_event="click"
+       s_type="button" />
+    <rect
+       style="fill:#33eeff;fill-opacity:0.3;stroke:#000000;stroke-width:1.5875;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2-5"
+       width="31.209486"
+       height="11.962981"
+       x="126.93605"
+       y="64"
+       innerText = "送信"
+       s_event="click"
+       s_type="button" />
+  </g>
+</svg>
