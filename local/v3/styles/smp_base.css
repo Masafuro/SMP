@@ -1,0 +1,14 @@
+body{
+  /* debug用背景色  */
+  background:#9a9a9a;
+  
+  margin:0;
+  padding:0;
+}
+
+/* SVG を幅方向で中央寄せ。幅は自然サイズのまま */
+svg{
+  display:block;          /* インライン → ブロックへ */
+  margin-left:auto;
+  margin-right:auto;
+}

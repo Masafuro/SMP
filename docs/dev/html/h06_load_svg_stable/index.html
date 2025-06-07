@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Fixed-size SVG demo</title>
+  <style>
+    /* 横スクロールだけ許す。ダブルタップ・ピンチズームは無効化 */
+    .svg-wrapper {
+      overflow-x: auto;
+      overflow-y: visible;
+      touch-action: pan-x pan-y; /* ズーム系ジェスチャーを禁止し、スクロールだけ許可 */
+      overscroll-behavior: contain; /* オーバースクロール時のブラウザズームを防止 */
+    }
+
+    .svg-wrapper img {
+      display: block;
+      max-width: none;
+      box-sizing: content-box;
+      touch-action: pan-x pan-y; /* 画像上でも同じ制御を掛けておく */
+      pointer-events: none;      /* 画像自体はポインタイベントを受け取らない */
+      user-select: none;         /* 誤選択による拡大防止 */
+    }
+  </style>
+</head>
+<body>
+  <div class="svg-wrapper">
+    <img id="svgImage" src="sample.svg" alt="Sample SVG">
+  </div>
+
+  <script>
+    /* 読み込んだ SVG の実寸を取得して固定値に設定 */
+    function lockSvgIntrinsicSize(img) {
+      const { naturalWidth, naturalHeight } = img;
+      if (naturalWidth && naturalHeight) {
+        img.style.width = naturalWidth + 'px';
+        img.style.height = naturalHeight + 'px';
+      }
+    }
+
+    const img = document.getElementById('svgImage');
+    if (img.complete) {
+      lockSvgIntrinsicSize(img);
+    } else {
+      img.addEventListener('load', () => lockSvgIntrinsicSize(img));
+    }
+
+    /* 念のためダブルクリック・ダブルタップの既定動作を抑止 */
+    img.addEventListener('dblclick', (e) => {
+      e.preventDefault();
+    });
+  </script>
+</body>
+</html>

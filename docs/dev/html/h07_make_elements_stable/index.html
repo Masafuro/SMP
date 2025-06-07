@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+
+  <title>Inline‑able SVG Sample</title>
+  <style>
+
+/* FROM V4 */
+body{
+  /* debug用背景色  */
+  background:#9a9a9a;
+  
+  margin:0;
+  padding:0;
+}
+
+/* SVG を幅方向で中央寄せ。幅は自然サイズのまま */
+svg{
+  display:block;          /* インライン → ブロックへ */
+  margin-left:auto;
+  margin-right:auto;
+}
+/* END FROM V4 */
+
+.overlay-element{
+  border: 0;
+  padding: 0;
+}
+
+input.overlay-element {
+  /* キャレット表示位置の調整 */
+  box-sizing: border-box;
+  padding-left: 10px;
+  width: calc(100% - 10px);
+}
+
+button.overlay-element:active {
+  background-color: #a5a5a5;
+}
+
+  </style>
+</head>
+<body>
+  <div class="viewport">
+    <!-- ここに JavaScript で sample.svg をインライン展開する -->
+    <div id="svg-container" class="svg-host"></div>
+  </div>
+
+  <script>
+fetch('sample.svg')
+  .then(response => {
+    if (!response.ok) throw new Error('SVG の読み込みに失敗しました');
+    return response.text();
+  })
+  .then(svgText => {
+    const container = document.getElementById('svg-container');
+
+    // container を初期化
+    container.innerHTML = '';
+    container.style.position = 'relative';
+
+    // SVGノードとして挿入
+    const parser = new DOMParser();
+    const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
+    const svg = svgDoc.documentElement;
+    svg.style.pointerEvents = 'none'; // 反応を遮断
+    container.appendChild(svg);
+
+    // overlay を container の外に作る（SVGと兄弟にする）
+    const overlay = document.createElement('div');
+    overlay.className = 'overlay';
+    overlay.style.position = 'absolute';
+    overlay.style.left = '0';
+    overlay.style.top = '0';
+    overlay.style.pointerEvents = 'none';
+    overlay.style.zIndex = '9999';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    container.appendChild(overlay);
+
+    // 遅延してレイアウト確定後に実行
+    requestAnimationFrame(() => {
+      const typedElements = svg.querySelectorAll('[type]');
+      const containerRect = container.getBoundingClientRect();
+
+      typedElements.forEach(el => {
+        const type = el.getAttribute('type');
+        const bbox = el.getBBox();
+        const matrix = el.getScreenCTM();
+        if (!matrix) return;
+
+        const point = svg.createSVGPoint();
+        point.x = bbox.x;
+        point.y = bbox.y;
+        const screenPoint = point.matrixTransform(matrix);
+        point.x = bbox.x + bbox.width;
+        point.y = bbox.y + bbox.height;
+        const screenPoint2 = point.matrixTransform(matrix);
+
+        const left = screenPoint.x - containerRect.left;
+        const top = screenPoint.y - containerRect.top;
+        const width = screenPoint2.x - screenPoint.x;
+        const height = screenPoint2.y - screenPoint.y;
+
+        let htmlElement;
+        if (type === 'button') {
+          htmlElement = document.createElement('button');
+          htmlElement.textContent = 'ボタン';
+        } else if (type === 'form') {
+          htmlElement = document.createElement('input');
+          htmlElement.placeholder = '入力欄';
+        } else {
+          return;
+        }
+
+        htmlElement.classList.add('overlay-element');
+        htmlElement.style.position = 'absolute';
+        htmlElement.style.left = `${left}px`;
+        htmlElement.style.top = `${top}px`;
+        htmlElement.style.width = `${width}px`;
+        htmlElement.style.height = `${height}px`;
+        htmlElement.style.pointerEvents = 'auto';
+        htmlElement.style.zIndex = '99999';
+
+        overlay.appendChild(htmlElement);
+      });
+    });
+  })
+  .catch(err => console.error(err));  </script>
+</body>
+</html>
