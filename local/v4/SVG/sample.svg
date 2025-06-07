@@ -62,7 +62,8 @@
        x="52.006821"
        y="32.477982"
        s_event="change"
-       s_type="form" />
+       placeholder="piyopiyo"
+       s_type="input" />
     <rect
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.5875;stroke-dasharray:none;stroke-opacity:1"
        id="rect2-3"
@@ -71,7 +72,7 @@
        x="51.961216"
        y="48.517475"
        s_event="input"
-       s_type="form" />
+       s_type="input" />
     <rect
        style="fill:#48e537;fill-opacity:1;stroke:#000000;stroke-width:1.5875;stroke-dasharray:none;stroke-opacity:1"
        id="rect2-4"
@@ -79,6 +80,17 @@
        height="11.962981"
        x="126.93605"
        y="32.417881"
+       innerText = "送信"
+       s_event="click"
+       s_type="button" />
+    <rect
+       style="fill:#33eeff;fill-opacity:0.3;stroke:#000000;stroke-width:1.5875;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2-5"
+       width="31.209486"
+       height="11.962981"
+       x="126.93605"
+       y="64"
+       innerText = "送信"
        s_event="click"
        s_type="button" />
   </g>

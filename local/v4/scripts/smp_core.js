@@ -6,6 +6,27 @@ const MQTT_TOPICS = {
   output: 'smp/output'  // 応答や更新が必要になった時用
 };
 
+
+// stroke width 変換
+function convertStrokeWidthToPixels(strokeWidthStr, svgElement) {
+  const strokeWidth = parseFloat(strokeWidthStr);
+  const viewBox = svgElement.viewBox.baseVal;
+  const bboxWidth = viewBox.width;
+
+  const renderedWidth = svgElement.getBoundingClientRect().width;
+
+  const scale = renderedWidth / bboxWidth; // 1ユーザー単位あたりのピクセル数
+  return strokeWidth * scale;
+}
+
+// fill opacity 変換
+function hexToRgba(hex, opacity) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+}
+
 // sample.svg をフェッチして DOM に挿入する。
 // 同一オリジンに置かれていれば CORS 制限なく取得できる。
 function fetch_svg() {
@@ -61,9 +82,7 @@ function renderInteractiveElements(svg, container, overlay) {
 }
 
 function createHTMLElementFromSVG(el, svg, containerRect) {
-  const id = el.getAttribute('id');
-  const type = el.getAttribute('s_type');
-  const eventAttr = el.getAttribute('s_event');
+
   const bbox = el.getBBox();
   const matrix = el.getScreenCTM();
   if (!matrix) return null;
@@ -82,19 +101,51 @@ function createHTMLElementFromSVG(el, svg, containerRect) {
   const height = screenPoint2.y - screenPoint.y;
 
   let htmlElement;
-  if (type === 'button') {
-    htmlElement = document.createElement('button');
-    htmlElement.textContent = 'ボタン';
-  } else if (type === 'form') {
-    htmlElement = document.createElement('input');
-    htmlElement.placeholder = '入力欄';
-  } else {
-    return null;
+  const type = el.getAttribute('s_type');
+  const eventAttr = el.getAttribute('s_event');
+  htmlElement = document.createElement(type)
+
+  const inner_Text = el.getAttribute('innerText');
+  if (inner_Text) {
+    htmlElement.innerText = inner_Text
   }
 
-  // type と s_event を HTML 要素に継承
-  htmlElement.setAttribute('s_type', type);
-  htmlElement.setAttribute('id', id);
+  const svg_style_code = el.getAttribute('style');
+  const styleObj = {};
+  svg_style_code.split(';').forEach(pair => {
+    const [key, value] = pair.split(':');
+    if (key && value) {
+      styleObj[key.trim()] = value.trim();
+    }
+  });
+  
+  const fill = styleObj["fill"];
+  const fillOpacity = styleObj["fill-opacity"] ?? "1"; // なければ1として扱う
+
+  if (fill && /^#([0-9a-fA-F]{6})$/.test(fill)) {
+    const rgbaColor = hexToRgba(fill, fillOpacity);
+    htmlElement.style.setProperty('--button-color', rgbaColor);
+  }
+
+  const strokeColor = styleObj["stroke"];
+  const pixelWidth = convertStrokeWidthToPixels(styleObj["stroke-width"], svg);
+  if (strokeColor && strokeColor !== "none") {
+    htmlElement.style.border = `${pixelWidth}px solid ${strokeColor}`;
+  }
+
+
+
+
+
+  // 指定したもの以外の属性をそのまま継承する
+  const excludeAttrs = ['x', 'y', 'width', 'height', 'style', 'innerText'];
+  for (let attr of el.attributes) {
+    if (!excludeAttrs.includes(attr.name)) {
+      htmlElement.setAttribute(attr.name, attr.value);
+    }
+  }
+
+  //s_eventを発火イベントに接続する
   if (eventAttr) {
     htmlElement.setAttribute('s_event', eventAttr);
     htmlElement.addEventListener(eventAttr, e => handleEvent(eventAttr, htmlElement, e));
@@ -108,6 +159,12 @@ function createHTMLElementFromSVG(el, svg, containerRect) {
   htmlElement.style.height = `${height}px`;
   htmlElement.style.pointerEvents = 'auto';
   htmlElement.style.zIndex = '99999';
+
+  //svg.removeChild(el);
+  if (el.parentNode) {
+    el.parentNode.removeChild(el);
+  }
+
 
   return htmlElement;
 }

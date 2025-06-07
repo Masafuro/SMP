@@ -8,6 +8,12 @@
 
 - とりあえずSVGでのtype指定はs_type。eventはとりあえずs_eventにした。
 - とりあえず動くところには来た。mqttも発行できている。
+- SVG側でinnerText属性を与えると、innerTextとして組み込まれるようにした。
+- また、属性値は知らないものを以下を除いて継承するようにした。
+  - 'x', 'y', 'width', 'height', 'style', 'innerText'
+- fillをbackgroundに与えるようにした。opacityも効く。
+- 変換したSVG要素は削除するようにした。
+  - ボーダーがない。
 
 UI要素組込み
 SVG側で幅を6pxにするとちょうどいい。
